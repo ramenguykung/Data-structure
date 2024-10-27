@@ -1,6 +1,6 @@
 # Data Structure
 
- This repository contains various data structures implementation in C++. This repository related to the course "Data Structure" in King's Mongkut University of Technology North Bangkok (KMUTNB).
+ This repository contains various data structures implementation in C++ programming language. This repository is related to the course "Data Structure" in King's Mongkut University of Technology North Bangkok (KMUTNB).
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@
 
 ## Introduction
 
-This repository is a collection of data structures, including but not limited to arrays, linked lists, stacks, queues, trees, and graphs. Each data structure is implemented with explanations and examples.
+This repository is a collection of data structures, including but not limited to arrays, linked lists, stacks, queues, trees hash tablesz, and graphs. Each data structure is implemented with explanations (not yet) and examples.
 
 ## Data Structures
 
@@ -40,4 +40,4 @@ Each data structure has its own folder with its comments along the source code (
 
 ## License
 
-This repository is unlicensed. See the [LICENSE](LICENSE) file for details.
+All files in this repository are unlicensed. See the [LICENSE](LICENSE) file for details.

@@ -7,7 +7,8 @@ int main() {
     char option;
     int value;
 
-    while (option != 'x' || option != 'X') {
+    while (true) {
+        cin >> option;
         switch (option) {
         case 'e':
             cin >> value;
@@ -18,10 +19,31 @@ int main() {
                 cout << "-1" << endl;
             } else {
             cout << q.front() << endl;
+            q.pop();
             }
+            break;
         case 'p': {
-            queue<int> temp;
+            queue<int> temp(q);
+            
+            if (q.empty()) {
+                cout << "\n";
+            } else {
+                while (!temp.empty()) {
+                    cout << temp.front() << " ";
+                    temp.pop();
+                }
+                cout << endl;
+            }
+            break;
         }
+        case 'n':
+            cout << q.size() << endl;
+            break;
+        case 's':
+            cout << q.front() << " " << q.back() << endl;
+            break;
+        case 'x':
+            exit(0);
         default:
             break;
         }

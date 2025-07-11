@@ -1,2 +1,5 @@
 # Execution files
 *.exe
+
+# Visual Studio Code configurations files
+.vscode/*

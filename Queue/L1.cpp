@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <limits>
 using namespace std;
 
 int main() {
@@ -11,8 +12,23 @@ int main() {
         cin >> option;
         switch (option) {
         case 'e':
-            cin >> value;
-            q.push(value);
+            try {
+                if (!(cin >> value)) {
+                    // Input failed (not a valid integer)
+                    cout << "Error: Invalid input. Please enter a valid integer." << endl;
+                    cin.clear(); // Clear error flags
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+                    break;
+                }
+                q.push(value);
+                cout << "Value " << value << " added to queue." << endl;
+            }
+            catch (const bad_alloc& e) {
+                cout << "Error: Memory allocation failed - " << e.what() << endl;
+            }
+            catch (const exception& e) {
+                cout << "Error: " << e.what() << endl;
+            }
             break;
         case 'd':
             if (q.empty()) {
@@ -40,7 +56,16 @@ int main() {
             cout << q.size() << endl;
             break;
         case 's':
-            cout << q.front() << " " << q.back() << endl;
+            try {
+                if (q.empty()) {
+                    cout << "Error: Queue is empty, cannot show front and back." << endl;
+                } else {
+                    cout << q.front() << " " << q.back() << endl;
+                }
+            }
+            catch (const exception& e) {
+                cout << "Error: " << e.what() << endl;
+            }
             break;
         case 'x':
             exit(0);

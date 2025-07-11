@@ -1,19 +1,46 @@
 #include <iostream>
 #include <stack>
-#include <string>
 using namespace std;
 
-void operation(char option) {
-
-}
-
 int main() {
-    stack<int> value;
     char option;
-    int number;
+    int value;
+    stack<int> st;
+
+    while (option != 'X') {
+        cin >> option;
+        
+        if (option == 'U') {
+            cin >> value;
+        }
+        switch (option)
+        {
+        case 'U':
+            st.push(value);
+            break;
+        case 'O':
+            cout << st.top() << endl;
+            st.pop();
+            break;
+        case 'T':
+            cout << st.top() << endl;
+            break;
+        case 'P': {
+            stack<int> temp(st);
+            while (!temp.empty()) {
+                cout << temp.top() << " ";
+                temp.pop();
+            }
+            cout << endl;
+            break;
+        }
+        case 'N':
+            cout << st.size() << endl;
+            break;
+        default:
+            break;
+        }
+    }
     
-    do{
-        cin >> option >> value;
-    } while (option != 'X');
     return 0;
 }

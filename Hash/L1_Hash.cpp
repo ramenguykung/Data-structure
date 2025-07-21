@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int TABLE_SIZE = 17;
+const int TABLE_SIZE = 200000;
 class node {
     public:
         int key;
@@ -27,9 +27,14 @@ class node {
 class separateChaining {
     public:
         int n;
-        node hashTable[TABLE_SIZE];
+        node* hashTable;
         separateChaining(int p_n) {
             n = p_n;
+            hashTable = new node[TABLE_SIZE];
+        }
+        
+        ~separateChaining() {
+            delete[] hashTable;
         }
 
         /**

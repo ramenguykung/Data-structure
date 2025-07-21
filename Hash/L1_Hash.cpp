@@ -54,13 +54,18 @@ class separateChaining {
             }
         }
 
+        /**
+         * @brief Search for a value by its key in the hash table.
+         * @param key The key to search for.
+         * @return The value associated with the key, or "-" if not found.
+         */
         string search(int key) {
             int j = key % TABLE_SIZE;
             if (hashTable[j].key == key) {
                 return hashTable[j].value;
             } else {
                 node * t_node = hashTable[j].next;
-                while (t_node->next != NULL) {
+                while (t_node != NULL && t_node->next != NULL) {
                     if (t_node->key == key) {
                         return t_node->value;
                     }
@@ -69,37 +74,73 @@ class separateChaining {
             }
             return "-";
         }
+
+        /**
+         * @brief Print the contents of the hash table.
+         * This function prints all key-value pairs in the hash table.
+         */
+        void print() {
+            // Check if the hash table is empty
+            bool isEmpty = true;
+            for (int i = 0; i < TABLE_SIZE; i++) {
+                if (hashTable[i].key != -1) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+            
+            if (isEmpty) {
+                cout << "Hash table is empty!" << endl;
+                return;
+            }
+            
+            for (int i = 0; i < TABLE_SIZE; i++) {
+                cout << "(" << hashTable[i].value << ", " << hashTable[i].key << ")";
+                if (hashTable[i].next != NULL) {
+                    node * t_node = hashTable[i].next;
+                    while (t_node->next != NULL) {
+                        cout << "(" << t_node->value << ", " << t_node->key << ")";
+                        t_node = t_node->next;
+                    }
+                }
+                cout << " ";
+            }
+            cout << endl;
+        }
 };
 
 int main() {
     char cmd;
     int key;
     string value;
-
-    cout << "Enter command: ";
-    cin >> cmd;
+    separateChaining hashTable(TABLE_SIZE);
     
-    /**
-     * @brief Process the command input by the user.
-     * @param cmd The command character input by the user.
-     * @param key The key to be used in the hash table.
-     * @param value The value to be associated with the key in the hash table.
-     * @param a Add a new key-value pair to the hash table.
-     * @param p Print key-value pairs in the hash table.
-     * @param s Search for value by the given key.
-     * @param e Exit the program.
-     */
-    switch (cmd) {
-        case 'a':
-            cin >> key >> value;
-        case 'p':
-        case 's':
-        case 'e':
-            exit(0);
-        default:
-            cout << "Invalid command!" << endl;
-            return 1;
+    while (true) {
+        cout << "Enter command (a: add, p: print, s: search, e: exit): ";
+        cin >> cmd;
 
+        switch (cmd) {
+            case 'a':
+                cin >> key >> value;
+                hashTable.add(key, value);
+                break;
+            case 'p':
+                hashTable.print();
+                break;
+            case 's':
+                cin >> key;
+                value = hashTable.search(key);
+                if (value == "-") {
+                    cout << value << endl;
+                } else {
+                    cout << value << endl;
+                }
+                break;
+            case 'e':
+                exit(0);
+            default:
+                cout << "Invalid command!" << endl;
+                continue;
+        }
     }
-    return 0;
 }

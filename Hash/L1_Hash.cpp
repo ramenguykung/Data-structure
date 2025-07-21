@@ -2,24 +2,72 @@
 using namespace std;
 
 const int TABLE_SIZE = 17;
+class node {
+    public:
+        int key;
+        string value;
+        node * next;
+
+        node() {
+            key = -1;
+            value = "-";
+            next = NULL;
+        }
+
+        node(string p_value, int p_key) {
+            value = p_value;
+            key = p_key;
+            next = NULL;
+        }
+};
 /**
  * @brief Hash table using separate chaining.
  * This class implements a hash table using separate chaining
  */
 class separateChaining {
     public:
-        int hash_key[TABLE_SIZE];
-        string hash_table[TABLE_SIZE];
-        int n = 0;
-        int r = 0;
-
-        separateChaining(int p_n, int p_r) {
+        int n;
+        node hashTable[TABLE_SIZE];
+        separateChaining(int p_n) {
             n = p_n;
-            r = p_r;
-            for(int i = 0; i < n; i++) {
-                hash_key[i] = -1;
-                hash_table[i] = "-";
+        }
+
+        /**
+         * @brief Add a key-value pair to the hash table.
+         * @param key The key to be added.
+         * @param value The value to be associated with the key.
+         */
+        void add(int key, string value) {
+            int index = key % TABLE_SIZE;
+            if (hashTable[index].next == NULL) {
+                hashTable[index].value = value;
+                hashTable[index].key = key;
+                hashTable[index].next = new node();
+            } else {
+                node * t_node = hashTable[index].next;
+                while (t_node->next != NULL) {
+                    t_node = t_node->next;
+                }
+                t_node->value = value;
+                t_node->key = key;
+                t_node->next = new node();
             }
+        }
+
+        string search(int key) {
+            int j = key % TABLE_SIZE;
+            if (hashTable[j].key == key) {
+                return hashTable[j].value;
+            } else {
+                node * t_node = hashTable[j].next;
+                while (t_node->next != NULL) {
+                    if (t_node->key == key) {
+                        return t_node->value;
+                    }
+                    t_node = t_node->next;
+                }
+            }
+            return "-";
         }
 };
 

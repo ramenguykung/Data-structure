@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int TABLE_SIZE = 200000;
+const int TABLE_SIZE = 17;
 class node {
     public:
         int key;
@@ -100,15 +100,14 @@ class separateChaining {
             }
             
             for (int i = 0; i < TABLE_SIZE; i++) {
-                cout << "(" << hashTable[i].value << ", " << hashTable[i].key << ")";
+                cout << "(" << hashTable[i].key << ", " << hashTable[i].value << ")" << endl;
                 if (hashTable[i].next != NULL) {
                     node * t_node = hashTable[i].next;
                     while (t_node->next != NULL) {
-                        cout << "(" << t_node->value << ", " << t_node->key << ")";
+                        cout << "(" << t_node->key << ", " << t_node->value << ")" << endl;
                         t_node = t_node->next;
                     }
                 }
-                cout << " ";
             }
             cout << endl;
         }
@@ -121,7 +120,7 @@ int main() {
     separateChaining hashTable(TABLE_SIZE);
     
     while (true) {
-        cout << "Enter command (a: add, p: print, s: search, e: exit): ";
+        // cout << "Enter command (a: add, p: print, s: search, e: exit): ";
         cin >> cmd;
 
         switch (cmd) {

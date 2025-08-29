@@ -27,7 +27,7 @@ class node {
 class separateChaining {
     public:
         int n;
-        node* hashTable;
+        node * hashTable;
         separateChaining(int p_n) {
             n = p_n;
             hashTable = new node[TABLE_SIZE];

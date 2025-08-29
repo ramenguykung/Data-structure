@@ -15,7 +15,7 @@ int bracketMatch(const string& text) {
         } else if (c == ')' || c == '}' || c == ']' || c == '>') {
             hasBrackets = true;
             if (st.empty()) {
-                return 0;
+                continue;
             }
 
             char top = st.top();
@@ -31,7 +31,7 @@ int bracketMatch(const string& text) {
             }
         }
     }
-    return (st.empty() && hasBrackets) ? matchCount : 0;
+    return hasBrackets ? matchCount : 0;
 }
 
 int main() {
@@ -39,11 +39,10 @@ int main() {
 
     getline(cin, input);
     if (bracketMatch(input)) {
-        cout << "Matched" << endl;
-        cout << bracketMatch(input) << " mathced" << endl;
+        cout << bracketMatch(input) << " matched" << endl;
     } else {
         cout << "Not Matched" << endl;
-        cout << bracketMatch(input) << " matched" << endl;
+        cout << bracketMatch(input) << " not matched" << endl;
     }
     return 0;
 }

@@ -4,8 +4,7 @@ using namespace std;
 
 class PID{
     public:
-    int pid, arrivalTime, serviceTime;
-
+    int pid;
     PID() {
         this->pid = 0;
     }

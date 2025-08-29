@@ -34,6 +34,14 @@ class separateChaining {
         }
         
         ~separateChaining() {
+            for (int i = 0; i < TABLE_SIZE; i++) {
+                node* current = hashTable[i].next;
+                while (current != NULL) {
+                    node* temp = current;
+                    current = current->next;
+                    delete temp;
+                }
+            }
             delete[] hashTable;
         }
 

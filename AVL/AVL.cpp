@@ -8,14 +8,14 @@ class Node {
 		Node * right;
 		
 		Node () { // default constructor
-			this->left = NULL;
-			this->right = NULL;
+			this->left = nullptr;
+			this->right = nullptr;
 		}
 		
 		Node (int data) {
 			this->data = data;
-			this->left = NULL;
-			this->right = NULL;
+			this->left = nullptr;
+			this->right = nullptr;
 		}
 };
 

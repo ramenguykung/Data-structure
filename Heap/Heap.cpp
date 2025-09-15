@@ -79,7 +79,7 @@ int main() {
 		} else if (command == 'p') {
 			maxHeap.show();
 		} else if (command == 'd') {
-			std::cout << "Removed: " << maxHeap.remove() << std::endl;
+			std::cout << maxHeap.remove() << std::endl;
 		} else if (command == 'e') {
 			break;
 		}

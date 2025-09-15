@@ -11,13 +11,13 @@ class node {
         node() {
             key = -1;
             value = "-";
-            next = NULL;
+            next = nullptr;
         }
 
         node(string p_value, int p_key) {
             value = p_value;
             key = p_key;
-            next = NULL;
+            next = nullptr;
         }
 };
 /**
@@ -36,7 +36,7 @@ class separateChaining {
         ~separateChaining() {
             for (int i = 0; i < TABLE_SIZE; i++) {
                 node* current = hashTable[i].next;
-                while (current != NULL) {
+                while (current != nullptr) {
                     node* temp = current;
                     current = current->next;
                     delete temp;
@@ -52,13 +52,13 @@ class separateChaining {
          */
         void add(int key, string value) {
             int index = key % TABLE_SIZE;
-            if (hashTable[index].next == NULL) {
+            if (hashTable[index].next == nullptr) {
                 hashTable[index].value = value;
                 hashTable[index].key = key;
                 hashTable[index].next = new node();
             } else {
                 node * t_node = hashTable[index].next;
-                while (t_node->next != NULL) {
+                while (t_node->next != nullptr) {
                     t_node = t_node->next;
                 }
                 t_node->value = value;
@@ -78,7 +78,7 @@ class separateChaining {
                 return hashTable[j].value;
             } else {
                 node * t_node = hashTable[j].next;
-                while (t_node != NULL && t_node->next != NULL) {
+                while (t_node != nullptr && t_node->next != nullptr) {
                     if (t_node->key == key) {
                         return t_node->value;
                     }
@@ -109,9 +109,9 @@ class separateChaining {
             
             for (int i = 0; i < TABLE_SIZE; i++) {
                 cout << "(" << hashTable[i].key << ", " << hashTable[i].value << ")" << endl;
-                if (hashTable[i].next != NULL) {
+                if (hashTable[i].next != nullptr) {
                     node * t_node = hashTable[i].next;
-                    while (t_node->next != NULL) {
+                    while (t_node->next != nullptr) {
                         cout << "(" << t_node->key << ", " << t_node->value << ")" << endl;
                         t_node = t_node->next;
                     }

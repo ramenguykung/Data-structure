@@ -7,7 +7,7 @@ public:
 	Node* next;
 	Node(int data) {
 		this->data = data;
-		this->next = NULL;
+		this->next = nullptr;
 	}
 };
 
@@ -17,7 +17,7 @@ public:
 	bool isValidInsertion;
 	LinkList() {
 		head = new Node(0); // temp head node
-		head->next = NULL;
+		head->next = nullptr;
 		isValidInsertion = true;
 	}
 
@@ -29,7 +29,7 @@ public:
 	}
 
 	bool exists(int data) {
-		for (Node* ptr = head; ptr != NULL; ptr = ptr->next) {
+		for (Node* ptr = head; ptr != nullptr; ptr = ptr->next) {
 			if (ptr->data == data) {
 				isValidInsertion = false;
 				return true;
@@ -45,12 +45,12 @@ public:
 		}
 
 		Node* ptr = head;
-		if (id == 0 && ptr->next == NULL) {
+		if (id == 0 && ptr->next == nullptr) {
 			push(data);
-		} else if (ptr->next != NULL && ptr->data == id) {
+		} else if (ptr->next != nullptr && ptr->data == id) {
 			push(data);
 		} else {
-			for (Node* ptr = head; ptr != NULL; ptr = ptr->next) {
+			for (Node* ptr = head; ptr != nullptr; ptr = ptr->next) {
 				if (ptr->data == data) {
 					break;
 				} else if (ptr->next->data == id) {
@@ -58,7 +58,7 @@ public:
 					x->next = ptr->next;
 					ptr->next = x;
 					break;
-				} else if (ptr->next->next == NULL && ptr->data != id) {
+				} else if (ptr->next->next == nullptr && ptr->data != id) {
 					Node* x = new Node(data);
 					x->next = ptr->next;
 					ptr->next = x;
@@ -74,20 +74,20 @@ public:
 		}
 
 		Node* ptr = head;
-		if (id == 0 && ptr->next == NULL) {
+		if (id == 0 && ptr->next == nullptr) {
 			push(data);
-		} else if (ptr->next != NULL && ptr->data == id) {
+		} else if (ptr->next != nullptr && ptr->data == id) {
 			Node* x = new Node(data);
 			x->next = ptr->next;
 			ptr->next = x;
 		} else {
-			for (Node* ptr = head; ptr != NULL; ptr = ptr->next) {
+			for (Node* ptr = head; ptr != nullptr; ptr = ptr->next) {
 				if (ptr->data == id) {
 					Node* x = new Node(data);
 					x->next = ptr->next;
 					ptr->next = x;
 					break;
-				} else if (ptr->next->next == NULL && ptr->data != id) {
+				} else if (ptr->next->next == nullptr && ptr->data != id) {
 					Node* x = new Node(data);
 					x->next = ptr->next;
 					ptr->next = x;
@@ -98,7 +98,7 @@ public:
 	}
 
 	void deletenode(int data) {
-		for (Node* ptr = head; ptr != NULL; ptr = ptr->next) {
+		for (Node* ptr = head; ptr != nullptr; ptr = ptr->next) {
 			if (ptr->data == data) {
 				head = ptr->next;
 				break;
@@ -110,7 +110,7 @@ public:
 	}
 
 	void printList() {
-		for (Node* ptr = head; ptr != NULL; ptr = ptr->next) {
+		for (Node* ptr = head; ptr != nullptr; ptr = ptr->next) {
 			if (ptr->data == 0) {
 				continue;
 			} else {

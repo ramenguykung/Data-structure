@@ -9,13 +9,13 @@ public:
 	Node *right;
 	Node()
 	{
-		this->left = NULL;
-		this->right = NULL;
+		this->left = nullptr;
+		this->right = nullptr;
 	}
 	Node(int value)
 	{
-		this->left = NULL;
-		this->right = NULL;
+		this->left = nullptr;
+		this->right = nullptr;
 		this->value = value;
 	}
 };
@@ -32,25 +32,25 @@ public:
 	void push(int value)
 	{
 		Node *x = new Node(value);
-		if (h->right == NULL)
+		if (h->right == nullptr)
 		{
 			h->right = x;
 		}
 		else
 		{
-			for (Node *head = h; head->right != NULL; head = head->right)
+			for (Node *head = h; head->right != nullptr; head = head->right)
 			{
 				cout << "start" << head->right->value << endl;
-				if (head->right->right == NULL)
+				if (head->right->right == nullptr)
 				{
-					if (value < head->right->value && head->right->left == NULL)
+					if (value < head->right->value && head->right->left == nullptr)
 					{
 						head->right->left = x;
 						cout << head->right->left->value << "insert left of " << head->right->value << endl;
 
 						break;
 					}
-					else if (value > head->right->value && head->right->right == NULL)
+					else if (value > head->right->value && head->right->right == nullptr)
 					{
 						head->right->right = x;
 						cout << head->right->right->value << "insert right of " << head->right->value << endl;
@@ -59,13 +59,13 @@ public:
 					else
 					{
 						head = head->right->left;
-						if (head->right == NULL && head->value < value)
+						if (head->right == nullptr && head->value < value)
 						{
 							head->right = x;
 							cout << head->right->value << "insert right of " << head->value << endl;
 							break;
 						}
-						else if (head->left == NULL && head->value > value)
+						else if (head->left == nullptr && head->value > value)
 						{
 							head->left = x;
 							cout << head->left->value << "insert left of " << head->value << endl;
@@ -76,7 +76,7 @@ public:
 				else if (value < head->right->value)
 				{
 
-					if (head->right->left == NULL)
+					if (head->right->left == nullptr)
 					{
 
 						head->right->left = x;
@@ -86,13 +86,13 @@ public:
 					else
 					{
 						head = head->right->left;
-						if (head->right == NULL && head->value < value)
+						if (head->right == nullptr && head->value < value)
 						{
 							head->right = x;
 							cout << head->right->value << "insert right of " << head->value << endl;
 							break;
 						}
-						else if (head->left == NULL && head->value > value)
+						else if (head->left == nullptr && head->value > value)
 						{
 							head->left = x;
 							cout << head->left->value << "insert left of " << head->value << endl;
@@ -107,21 +107,21 @@ public:
 	{
 		Node *head = h;
 		q.push(head->right);
-		q.push(NULL);
+		q.push(nullptr);
 		int i = 0;
 		while (!q.empty())
 		{
 			Node *current = q.front();
 			q.pop();
 
-			if (current != NULL)
+			if (current != nullptr)
 			{
 				cout << current->value << ",";
-				if (current->left != NULL)
+				if (current->left != nullptr)
 				{
 					q.push(current->left);
 				}
-				if (current->right != NULL)
+				if (current->right != nullptr)
 				{
 					q.push(current->right);
 				}
@@ -131,7 +131,7 @@ public:
 				cout << "|";
 				if (!q.empty())
 				{
-					q.push(NULL);
+					q.push(nullptr);
 				}
 			}
 		}
@@ -139,7 +139,7 @@ public:
 	}
 	void inorder(Node *node)
 	{
-		if (node == NULL)
+		if (node == nullptr)
 			return;
 
 		inorder(node->left);
@@ -154,7 +154,7 @@ public:
 	}
 	void preorder(Node *node)
 	{
-		if (node == NULL)
+		if (node == nullptr)
 			return;
 
 		cout << node->value << ",";
@@ -170,7 +170,7 @@ public:
 
 	void postorder(Node *node)
 	{
-		if (node == NULL)
+		if (node == nullptr)
 			return;
 
 		postorder(node->left);
@@ -190,7 +190,7 @@ public:
 
 	Node *deleteNodeRec(Node *root, int value)
 	{
-		if (root == NULL)
+		if (root == nullptr)
 			return root;
 
 		if (value < root->value)
@@ -206,20 +206,20 @@ public:
 			// Node with the value found
 
 			// Case 1: Node has no children (leaf node)
-			if (root->left == NULL && root->right == NULL)
+			if (root->left == nullptr && root->right == nullptr)
 			{
 				delete root;
-				return NULL;
+				return nullptr;
 			}
 
 			// Case 2: Node has one child
-			if (root->left == NULL)
+			if (root->left == nullptr)
 			{
 				Node *temp = root->right;
 				delete root;
 				return temp;
 			}
-			if (root->right == NULL)
+			if (root->right == nullptr)
 			{
 				Node *temp = root->left;
 				delete root;
@@ -237,7 +237,7 @@ public:
 	Node *minValueNode(Node *node)
 	{
 		Node *current = node;
-		while (current && current->left != NULL)
+		while (current && current->left != nullptr)
 		{
 			current = current->left;
 		}

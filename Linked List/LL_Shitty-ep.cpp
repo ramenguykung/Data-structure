@@ -7,7 +7,7 @@ class Node{
 		
 		Node(int data) { //Node Constructor
 			this->data = data;
-			this->next = NULL;
+			this->next = nullptr;
 		}
 };
 
@@ -24,7 +24,7 @@ void insertAfter(Node** head, int value) {
 
 void traverse(Node* head) {
 	Node* current = head;
-	while (current != NULL) {
+	while (current != nullptr) {
 		cout << current->data << " ";
 		current = current -> next;
 	}

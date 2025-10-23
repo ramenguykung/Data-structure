@@ -26,7 +26,7 @@ class MaxHeap {
             }
         
         if (rightChildIndex < size &&
-            heap[rightChildIndex] > heap[rightChildIndex]) {
+            heap[rightChildIndex] > heap[largestIndex]) {
                 largestIndex = rightChildIndex;
             }
 

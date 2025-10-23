@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 class Node {
@@ -7,15 +8,18 @@ class Node {
 		int data;
 		Node * left;
 		Node * right;
+		int height;
 		
 		Node(){ // default constructor
 			this->left = nullptr;
 			this->right = nullptr;
+			this->height = 1;
 		}
 		Node(int data) {
 			this->data = data;
 			this->left = nullptr;
 			this->right = nullptr;
+			this->height = 1;
 		}
 };
 
@@ -25,82 +29,169 @@ class tree {
 		tree() {
 			h = nullptr;
 		}
+		
+		// Helper functions
+		int getHeight(Node* node) {
+			if (node == nullptr) return 0;
+			return node->height;
+		}
+		
+		int getBalance(Node* node) {
+			if (node == nullptr) return 0;
+			return getHeight(node->left) - getHeight(node->right);
+		}
+		
+		void updateHeight(Node* node) {
+			if (node == nullptr) return;
+			node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+		}
+		
+		// Right rotation
+		Node* rotateRight(Node* y) {
+			Node* x = y->left;
+			Node* T2 = x->right;
+			
+			x->right = y;
+			y->left = T2;
+			
+			updateHeight(y);
+			updateHeight(x);
+			
+			return x;
+		}
+		
+		// Left rotation
+		Node* rotateLeft(Node* x) {
+			Node* y = x->right;
+			Node* T2 = y->left;
+			
+			y->left = x;
+			x->right = T2;
+			
+			updateHeight(x);
+			updateHeight(y);
+			
+			return y;
+		}
+		
+		// Insert helper
+		Node* insertNode(Node* node, int x) {
+			if (node == nullptr) {
+				return new Node(x);
+			}
+			
+			if (x < node->data) {
+				node->left = insertNode(node->left, x);
+			} else if (x > node->data) {
+				node->right = insertNode(node->right, x);
+			} else {
+				return node; // Duplicate
+			}
+			
+			updateHeight(node);
+			
+			int balance = getBalance(node);
+			
+			// Left-Left case
+			if (balance > 1 && x < node->left->data) {
+				return rotateRight(node);
+			}
+			
+			// Right-Right case
+			if (balance < -1 && x > node->right->data) {
+				return rotateLeft(node);
+			}
+			
+			// Left-Right case
+			if (balance > 1 && x > node->left->data) {
+				node->left = rotateLeft(node->left);
+				return rotateRight(node);
+			}
+			
+			// Right-Left case
+			if (balance < -1 && x < node->right->data) {
+				node->right = rotateRight(node->right);
+				return rotateLeft(node);
+			}
+			
+			return node;
+		}
+		
+		// Find minimum value node
+		Node* minValueNode(Node* node) {
+			Node* current = node;
+			while (current->left != nullptr) {
+				current = current->left;
+			}
+			return current;
+		}
+		
+		// Delete helper
+		Node* deleteNode(Node* node, int x) {
+			if (node == nullptr) return node;
+			
+			if (x < node->data) {
+				node->left = deleteNode(node->left, x);
+			} else if (x > node->data) {
+				node->right = deleteNode(node->right, x);
+			} else {
+				// Node with one child or no child
+				if (node->left == nullptr || node->right == nullptr) {
+					Node* temp = node->left ? node->left : node->right;
+					
+					if (temp == nullptr) {
+						temp = node;
+						node = nullptr;
+					} else {
+						*node = *temp;
+					}
+					delete temp;
+				} else {
+					// Node with two children
+					Node* temp = minValueNode(node->right);
+					node->data = temp->data;
+					node->right = deleteNode(node->right, temp->data);
+				}
+			}
+			
+			if (node == nullptr) return node;
+			
+			updateHeight(node);
+			
+			int balance = getBalance(node);
+			
+			// Left-Left case
+			if (balance > 1 && getBalance(node->left) >= 0) {
+				return rotateRight(node);
+			}
+			
+			// Left-Right case
+			if (balance > 1 && getBalance(node->left) < 0) {
+				node->left = rotateLeft(node->left);
+				return rotateRight(node);
+			}
+			
+			// Right-Right case
+			if (balance < -1 && getBalance(node->right) <= 0) {
+				return rotateLeft(node);
+			}
+			
+			// Right-Left case
+			if (balance < -1 && getBalance(node->right) > 0) {
+				node->right = rotateRight(node->right);
+				return rotateLeft(node);
+			}
+			
+			return node;
+		}
+		
 		// Methods
 		void push(int x) {
-			if (h == nullptr) {
-				h = new Node(x);
-				return;
-			}
-			Node* current = h;
-			while(true) {
-				if (x < current->data) {
-					if (current->left == nullptr) {
-						current->left = new Node(x);
-						return;
-					}
-					current = current->left;
-				} else if (x > current->data) {
-					if (current->right == nullptr) {
-						current->right = new Node(x);
-						return;
-					}
-					current = current->right;
-				} else {
-					return;
-				}
-			}
+			h = insertNode(h, x);
 		}
+		
 		void pop(int x) {
-			if (h == nullptr) return;  // Empty tree
-
-			Node* current = h;
-			Node* parent = nullptr;
-
-			// Find the node and its parent
-			while (current != nullptr && current->data != x) {
-				parent = current; 
-				if (x < current->data) {
-					current = current->left;
-				} else {
-					current = current->right;
-				}
-			}
-			if (current == nullptr) return;  // Not found
-
-			// Now delete current
-			if (current->left == nullptr && current->right == nullptr) {
-				// Leaf
-				if (parent == nullptr) h = nullptr;
-				else if (parent->left == current) parent->left = nullptr;
-				else parent->right = nullptr;
-				delete current;
-			} else if (current->left == nullptr) {
-				// One right child
-				if (parent == nullptr) h = current->right;
-				else if (parent->left == current) parent->left = current->right;
-				else parent->right = current->right;
-				delete current;
-			} else if (current->right == nullptr) {
-				// One left child
-				if (parent == nullptr) h = current->left;
-				else if (parent->left == current) parent->left = current->left;
-				else parent->right = current->left;
-				delete current;
-			} else {
-				// Two children: Find in-order successor
-				Node* successor = current->right;
-				Node* succParent = current;
-				while (successor->left != nullptr) {
-					succParent = successor;
-					successor = successor->left;
-				}
-				// Swap data
-				current->data = successor->data;
-				// Delete successor (which is now a leaf or has right child)
-				if (succParent->left == successor) succParent->left = successor->right;
-				else succParent->right = successor->right;
-				delete successor;
-			}
+			h = deleteNode(h, x);
 		}
 		void peekPreOrder() {
 			preorder(h);
@@ -109,7 +200,7 @@ class tree {
 		void preorder(Node * node) {
 			if (node == nullptr) return;
 
-			cout << node->data << ",";
+			cout << node->data << " ";
 			preorder(node->left);
 			preorder(node->right);
 		}
